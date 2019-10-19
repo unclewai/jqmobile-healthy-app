@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Healthy App</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+</head>
+<body>
+
+<!-- BMI 頁面結構 -->
+<div id="page-bmi" data-role="page">
+
+    <!-- Header 頂部欄 -->
+    <div data-role="header">
+        <h1>BMI 計算器</h1>
+    </div>
+
+    <!-- 內容 -->
+    <div data-role="content">
+        <h2>BMI 計算器</h2>
+
+        <label for="number-weight">請輸入體重 (公斤/kg): </label>
+        <input type="text" name="number-weight" id="number-weight" value="">
+
+        <br>
+
+        <label for="number-height">請輸入身高 (厘米/cm): </label>
+        <input type="text" name="number-height" id="number-height" value="">
+
+        <br>
+
+        <button class="ui-btn ui-shadow" id="btn-calculate-bmi">計算 BMI</button>
+
+        <br>
+        <div id="bmi-result">
+            <label for="slider">BMI 範圍</label>
+            <input type="range" name="slider" id="slider" value="20" min="10" max="30" step="0.1">
+            <div id="bmi-message"></div>
+        </div>
+    </div>
+
+    <!-- Footer 底部欄 -->
+    <div data-role="footer" data-position="fixed">
+        <div data-role="navbar">
+            <ul>
+                <li><a href="#page-bmi" data-role="tab" data-icon="grid" class="ui-btn-active">BMI 計算器</a></li>
+                <li><a href="#page-foods" data-role="tab" data-icon="grid">食物卡路里</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- 食物頁面結構 -->
+<div id="page-foods" data-role="page">
+
+    <!-- Header 頂部欄 -->
+    <div data-role="header">
+        <h1>食物卡路里</h1>
+    </div>
+
+    <!-- 內容 -->
+    <div data-role="content">
+        <div data-role="collapsibleset" data-theme="a" data-content-theme="a">
+            <div data-role="collapsible">
+                <h3>白粥</h3>
+                <table>
+                    <tr>
+                        <td>熱量</td>
+                        <td>46 大卡（100克）</td>
+                    </tr>
+                    <tr>
+                        <td>熱量(大卡)</td>
+                        <td>46.00</td>
+                    </tr>
+                    <tr>
+                        <td>碳水化合物(克)</td>
+                        <td>9.90</td>
+                    </tr>
+                    <tr>
+                        <td>脂肪(克)</td>
+                        <td>0.30</td>
+                    </tr>
+                    <tr>
+                        <td>蛋白質(克)</td>
+                        <td>1.10</td>
+                    </tr>
+                    <tr>
+                        <td>纖維素(克)</td>
+                        <td>0.10</td>
+                    </tr>
+                </table>
+            </div>
+            <div data-role="collapsible">
+                <h3>雞蛋</h3>
+                <table>
+                    <tr>
+                        <td>熱量</td>
+                        <td>144 大卡（100克可食部分）</td>
+                    </tr>
+                    <tr>
+                        <td>熱量(大卡)</td>
+                        <td>144.00</td>
+                    </tr>
+                    <tr>
+                        <td>碳水化合物(克)</td>
+                        <td>2.80</td>
+                    </tr>
+                    <tr>
+                        <td>脂肪(克)</td>
+                        <td>8.80</td>
+                    </tr>
+                    <tr>
+                        <td>蛋白質(克)</td>
+                        <td>13.30</td>
+                    </tr>
+                    <tr>
+                        <td>維生素A(微克)</td>
+                        <td>234.00</td>
+                    </tr>
+                </table>
+            </div>
+            <div data-role="collapsible">
+                <h3>豆漿</h3>
+                <table>
+                    <tr>
+                        <td>熱量</td>
+                        <td>31 大卡（100毫升）</td>
+                    </tr>
+                    <tr>
+                        <td>熱量(大卡)</td>
+                        <td>31.00</td>
+                    </tr>
+                    <tr>
+                        <td>碳水化合物(克)</td>
+                        <td>1.20</td>
+                    </tr>
+                    <tr>
+                        <td>脂肪(克)</td>
+                        <td>1.60</td>
+                    </tr>
+                    <tr>
+                        <td>蛋白質(克)</td>
+                        <td>3.00</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer 底部欄 -->
+    <div data-role="footer" data-position="fixed">
+        <div data-role="navbar">
+            <ul>
+                <li><a href="#page-bmi" data-role="tab" data-icon="grid">BMI 計算器</a></li>
+                <li><a href="#page-foods" data-role="tab" data-icon="grid" class="ui-btn-active">食物卡路里</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+$("a[data-role=tab]").each(function () {
+    $(this).on("click", function () {
+        $.mobile.changePage($(this).attr("href"), {
+            transition: "none",
+            changeHash: false
+        });
+        return false;
+    });
+});
+
+$(function () {
+    $('#bmi-result').hide(0);
+
+    $('#btn-calculate-bmi').on('click', function (e) {
+        e.preventDefault();
+
+        var number_weight = parseFloat($('#number-weight').val());
+        var number_height = parseFloat($('#number-height').val());
+
+        if (isNaN(number_weight) || number_weight < 20 || number_weight > 200) {
+            alert('請輸入正確的體重');
+            return;
+        }
+
+        if (isNaN(number_height) || number_height < 50 || number_height > 250) {
+            alert('請輸入正確的身高');
+            return;
+        }
+
+        var bmi = number_weight / (Math.pow(number_height / 100, 2));
+
+        $('#slider').val(bmi).slider("refresh");
+
+        var message;
+
+        if (bmi < 18.5) {
+            message = '需要增重了!';
+        } else if (bmi >= 18.5 && bmi <= 24) {
+            message = '目前的比例很健康，繼續保持!'
+        } else {
+            message = '需要規劃一下健康飲食的餐單了!';
+        }
+
+        $('#bmi-message').html(message);
+
+        $('#bmi-result').show(0);
+    });
+});
+</script>
+
+</body>
+</html>
